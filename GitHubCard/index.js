@@ -2,12 +2,14 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+const axios = require('axios');
 
 axios.get("https://api.github.com/users/maketaller")
 	.then( response => {
-		console.log("I made it mom");
+		// console.log("I made it mom", response);
 	})
 	.catch( err => {
+		// console.log("This is the error: ", err )
 
 	})
 
@@ -53,6 +55,31 @@ const followersArray = [];
 </div>
 
 */
+
+function myComponent(obj){
+	let card = document.createElement('div');
+	card.classList.add('card');
+	
+	let cardInfo = document.createElement('div');
+	cardInfo.classList.add('card-info');
+	
+	let name = document.createElement('div');
+	name.classList.add('name');
+
+	let username = document.createElement('div');
+	username.classList.add('username');
+	 console.log(card);
+
+	card.appendChild(cardInfo)
+	card.appendChild(name)
+	card.appendChild(username)
+
+
+	return card;
+	
+}
+
+console.log(myComponent());
 
 /* List of LS Instructors Github username's: 
   tetondan
