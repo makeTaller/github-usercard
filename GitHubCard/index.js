@@ -2,16 +2,7 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-const axios = require('axios');
-
-axios.get("https://api.github.com/users/maketaller")
-	.then( response => {
-		// console.log("I made it mom", response);
-	})
-	.catch( err => {
-		// console.log("This is the error: ", err )
-
-	})
+console.log(axios.get('https://api.github.com/users/maketaller'));
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -23,6 +14,12 @@ axios.get("https://api.github.com/users/maketaller")
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
+const container = document.querySelector('.cards');
+const wholeContainer = document.querySelector('.container');
+axios.get('https://api.github.com/users/maketaller')
+  .then((resp) => {
+    container.appendChild(githubCard(resp));
+  });
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -34,7 +31,28 @@ axios.get("https://api.github.com/users/maketaller")
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'https://api.github.com/users/Amber-Pittman',
+  'https://api.github.com/users/nickdurbin',
+  'https://api.github.com/users/leachcoding',
+  'https://api.github.com/users/clifhodges13',
+  'https://api.github.com/users/mnichols08'
+];
+
+const btn = document.createElement('button');
+btn.textContent = 'Show My Followers';
+btn.classList.add('show-more-btn');
+wholeContainer.appendChild(btn);
+
+btn.addEventListener('click', () => {
+  followersArray.forEach((item) => {
+    axios.get(item)
+      .then((resp) => {
+        container.appendChild(githubCard(resp));
+      })
+  })
+  btn.style.display = 'none';
+});
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -56,30 +74,56 @@ const followersArray = [];
 
 */
 
-function myComponent(obj){
-	let card = document.createElement('div');
-	card.classList.add('card');
-	
-	let cardInfo = document.createElement('div');
-	cardInfo.classList.add('card-info');
-	
-	let name = document.createElement('div');
-	name.classList.add('name');
+function githubCard(obj) {
+  const card = document.createElement('div');
+  card.classList.add('card');
 
-	let username = document.createElement('div');
-	username.classList.add('username');
-	 console.log(card);
+  const img = document.createElement('img');
+  img.src = obj.data.avatar_url;
+  card.appendChild(img);
 
-	card.appendChild(cardInfo)
-	card.appendChild(name)
-	card.appendChild(username)
+  const info = document.createElement('div');
+  info.classList.add('card-info');
+  card.appendChild(info);
+
+  const infoH3 = document.createElement('h3');
+  infoH3.classList.add('name');
+  infoH3.textContent = obj.data.name
+  info.appendChild(infoH3);
+
+  const user = document.createElement('p');
+  user.classList.add('username');
+  user.textContent = obj.data.login;
+  info.appendChild(user);
+
+  const location = document.createElement('p');
+  location.textContent = obj.data.location;
+  info.appendChild(location);
+
+  const profile = document.createElement('p');
+  profile.textContent = 'Profile:';
+  info.appendChild(profile);
+
+  const profileLink = document.createElement('a');
+  profileLink.href = obj.data.html_url;
+  profileLink.textContent = ` ${obj.data.html_url}`
+  profile.appendChild(profileLink);
+
+  const followers = document.createElement('p');
+  followers.textContent = `Followers: ${obj.data.followers}`;
+  info.appendChild(followers);
+
+  const following = document.createElement('p');
+  following.textContent = `Following: ${obj.data.following}`;
+  info.appendChild(following);
+
+  const bio = document.createElement('p');
+  bio.textContent = obj.data.bio;
+  info.append(bio);
 
 
-	return card;
-	
+  return card;
 }
-
-console.log(myComponent());
 
 /* List of LS Instructors Github username's: 
   tetondan
