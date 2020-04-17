@@ -1,7 +1,16 @@
+const axios = require('axios');
 /* Step 1: using axios, send a GET request to the following URL 
-           (replacing the palceholder with your Github name):
+          (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+axios.get("http://api.github.com/users/maketaller")
+	.then( data =>{
+	console.log(data)})
+	.catch(err =>{
+	console.log(err);})
+
+
+
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -30,7 +39,7 @@ const followersArray = [];
           Using DOM methods and properties, create a component that will return the following DOM element:
 
 <div class="card">
-  <img src={image url of user} />
+  <img src={immage url of user} />
   <div class="card-info">
     <h3 class="name">{users name}</h3>
     <p class="username">{users user name}</p>
@@ -45,6 +54,53 @@ const followersArray = [];
 </div>
 
 */
+function githubUserSetup( githubUser ){
+	
+
+	const card = document.createElement('div');
+
+	const img = document.createElement('img');
+	img.src = githubUser.avatar_url;
+	
+	const cardInfo = document.createElement('div');
+	cardInfo.classList.add('card-info');
+	
+	const name = document.createElement('h3');
+	cardInfo.classList.add('name');
+	name.textContent = githubUser.name || "See Username";
+	
+	const username = document.createElement('p');
+	username.classList.add('username');
+	username.textContent = githubUser.login;
+	
+	const location = document.createElement('p');
+	location.textContent = `Location: ${githubUser.location} ` || "Not Available";
+	
+	const profile = document.createElement('p');
+	profile.textContent = `Profile: ${githubUser.url} ` || "Not Available";
+	
+	const followers = document.createElement('p');
+	followers.textContent = `Followers: ${githubUser.followers} ` || "Not Available";
+	
+	const following = document.createElement('p');
+	following.textContent = `Following: ${githubUser.following} ` || "Not Available";
+	
+	const bio = document.createElement('p');
+	bio.textContent = `Bio: ${githubUser.bio} ` || "Not Available";
+
+
+	img.classList.add(imgUrl);
+	card.classList.add(img)
+	
+
+
+	card.appendChild(img);
+	card.appendChild(cardInfo);
+
+	name.textContent = `Name: ${githubUser}`;
+
+	return card;
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
