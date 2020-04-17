@@ -56,7 +56,6 @@ const followersArray = [];
 */
 function githubUserSetup( githubUser ){
 	
-
 	const card = document.createElement('div');
 
 	const img = document.createElement('img');
@@ -88,16 +87,19 @@ function githubUserSetup( githubUser ){
 	const bio = document.createElement('p');
 	bio.textContent = `Bio: ${githubUser.bio} ` || "Not Available";
 
-
-	img.classList.add(imgUrl);
-	card.classList.add(img)
-	
-
+	cardInfo.appendChild(name);
+	cardInfo.appendChild(username);
+	cardInfo.appendChild(location);
+	cardInfo.appendChild(profile);
+	cardInfo.appendChild(following);
+	cardInfo.appendChild(followers);
+	cardInfo.appendChild(bio);
 
 	card.appendChild(img);
 	card.appendChild(cardInfo);
 
-	name.textContent = `Name: ${githubUser}`;
+	const cardEntry = document.querySelector('.cards')
+	cardEntry.appendChild(card)
 
 	return card;
 }
