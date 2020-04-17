@@ -1,12 +1,17 @@
-const axios = require('axios');
+// const axios = require('axios');
 /* Step 1: using axios, send a GET request to the following URL 
           (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+
+let cardEntry = document.querySelector('.cards')
+
 axios.get("http://api.github.com/users/maketaller")
-	.then( data =>{
-	console.log(data)})
-	.catch(err =>{
+	.then( ( response ) =>{
+	let newUser = githubUserSetup(response.data)
+	cardEntry.appendChild(newUser)
+	console.log(response)})
+	.catch((err) =>{
 	console.log(err);})
 
 
@@ -97,9 +102,6 @@ function githubUserSetup( githubUser ){
 
 	card.appendChild(img);
 	card.appendChild(cardInfo);
-
-	const cardEntry = document.querySelector('.cards')
-	cardEntry.appendChild(card)
 
 	return card;
 }
