@@ -22,18 +22,31 @@
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
+let container = document.querySelector('.cards');
 
 axios.get('https://api.github.com/users/maketaller')
 .then(response => {
-  let container = document.querySelector('.cards');
-  container.append(createCard(response.data))
-  console.log(response)
-  console.log(createCard(response.data))})
+   container.append(createCard(response.data))
+   console.log(response)
+   console.log(createCard(response.data))})
 .catch(error => {
   console.error(error)
 })
 
-const followersArray = [];
+const followersArray = [
+	"https://api.github.com/users/tetondan",
+	"https://api.github.com/users/dustinmyers",
+	"https://api.github.com/users/justsml",
+	"https://api.github.com/users/luishrd",
+	"https://api.github.com/users/bigknell",
+];
+
+followersArray.forEach( follower =>{
+	axios.get(follower)
+		.then( response =>{
+		container.append(createCard(response.data))
+		})
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -64,6 +77,7 @@ const followersArray = [];
 // console.log(content);
 
 const createCard = function(user) {
+
   let card = document.createElement('div');
   card.classList.add('card');
 
@@ -110,4 +124,3 @@ const createCard = function(user) {
 
   return card
 }
-// console.log(createCard(re))
